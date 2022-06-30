@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import React,{useState} from 'react';
+import LoginForm from './Component/LoginForm';
+import LoginImage from './Component/LoginImage';
+import WelcomePage from './Component/WelcomePage'
 
 function App() {
+  const [isSubmitted, setIsSubmitted] = useState(true);
+  const [name, setName] = useState("")
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(false)
+  }
+  const onChange = ({target: {value}}) =>{
+    setName(value)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='container-fluid'>
+        { isSubmitted ?<div className='row'>
+          <LoginImage />
+          <LoginForm onSubmit={onSubmit} name={name} onChange={onChange} />
+        </div> : <WelcomePage userName={name} />}
+      </div>
     </div>
   );
 }
